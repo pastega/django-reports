@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block scripts %}
+    <script defer src="{% static 'sales/home.js' %}"></script>
+{% endblock %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <div id="alert-box"></div>
+                    <form id="report-form">
+                        {% csrf_token %}
+                        {{ report_form|crispy }}
+                        <button type="submit" class="btn btn-info mt-2">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1>Report app</h1>
+    <hr/>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{ search_form|crispy }}
+        <button type="submit" class="btn btn-primary mt-3">Search</button>
+    </form>
+
+    {% if sales_df %}
+        <p>Sales dataframe</p>
+        {{ sales_df|safe }}
+        <br />
+        <p>Positions dataframe</p>
+        {{ positions_df|safe }}
+        <br />
+        <p>Merged dataframe</p>
+        {{ merged_df|safe }}
+        <br />
+        <p>Grouped dataframe</p>
+        {{ df|safe }}
+        <br />
+        <p>Chart</p> 
+        <img src="data:image/png;base64, {{ chart|safe }}" alt="Chart" id="img"/>
+    {% else %}
+        <p>No data.</p>
+    {% endif %}
+
+    <button class="btn btn-primary" id="report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">Add Report</button>
+{% endblock %}
