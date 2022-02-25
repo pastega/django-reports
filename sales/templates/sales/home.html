@@ -32,6 +32,12 @@
     <h1>Report app</h1>
     <hr/>
 
+    {% if no_data %}
+        <div class="alert alert-warning" role="alert">
+            {{ no_data }}
+        </div>
+    {% endif %}
+
     <form action="" method="POST">
         {% csrf_token %}
         {{ search_form|crispy }}

@@ -19,8 +19,8 @@ def home_view(request):
     positions_df = None
     merged_df = None
     df = None
-    
     chart = None
+    no_data = None
 
     if request.method == 'POST':
 
@@ -59,12 +59,12 @@ def home_view(request):
 
             chart = get_chart(chart_type, sales_df, results_by)
 
-
-
             # Convert dataframes to html, in order to display data
             sales_df = sales_df.to_html()
             positions_df = positions_df.to_html()
             merged_df = merged_df.to_html()
+        else:
+            no_data = 'No data available in this date range'
 
     context = {
         'search_form': search_form,
@@ -72,7 +72,8 @@ def home_view(request):
         'sales_df': sales_df,
         'positions_df': positions_df,
         'merged_df': merged_df,
-        'chart': chart
+        'chart': chart,
+        'no_data': no_data
     }
 
     return render(request, 'sales/home.html', context)
