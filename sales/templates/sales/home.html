@@ -58,10 +58,10 @@
         {{ df|safe }}
         <br />
         <p>Chart</p> 
-        <img src="data:image/png;base64, {{ chart|safe }}" alt="Chart" id="img"/>
+        <img src="data:image/png;base64, {{ chart|safe }}" alt="Chart" id="img"/><br>
     {% else %}
         <p>No data.</p>
     {% endif %}
 
-    <button class="btn btn-primary" id="report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">Add Report</button>
+    <button class="btn btn-primary mt-3" id="report-btn" data-bs-toggle="modal" data-bs-target="#reportModal">Add Report</button>
 {% endblock %}
