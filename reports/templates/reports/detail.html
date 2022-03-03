@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.name }}{% endblock title %}
+
+{% block content %}
+    {% if object.image %}
+        <img src="{{ object.image.url }}" class="img-fluid" alt="{{ object.name }}">
+    {% endif %}
+    <h3>Remarks</h3>
+    <p>{{ object.remarks }}</p>
+    <hr>
+    <p>Author: <strong>{{ object.author.user.username }}</strong></p>
+    <p>Created: <strong>{{ object.created }}</strong></p>
+{% endblock content %}
