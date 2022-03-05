@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 import pandas as pd
 
 from .models import Sale
@@ -11,6 +14,7 @@ from customers.models import Customer
 from profiles.models import Profile
 from reports.forms import ReportForm
 
+@login_required
 def home_view(request):
     search_form = SalesSearchForm(request.POST or None)
     report_form = ReportForm()
@@ -78,18 +82,20 @@ def home_view(request):
 
     return render(request, 'sales/home.html', context)
 
+@login_required
 def sale_list_view(request):
     return render(request, 'sales/main.html', {'object_list': Sale.objects.all()})
 
+@login_required
 def sale_detail_view(request, pk):
     return render(request, 'sales/detail.html', {'object': Sale.objects.get(pk=pk)})
 
 # Same thing but with class-based views
 
-class SaleListView(ListView):
+class SaleListView(LoginRequiredMixin, ListView):
     model = Sale
     template_name = 'sales/main.html'
 
-class SaleDetailView(DetailView):
+class SaleDetailView(LoginRequiredMixin, DetailView):
     model = Sale
     template_name = 'sales/detail.html'
